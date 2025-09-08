@@ -16,6 +16,11 @@ from routers import monitoring, remediation
 # Load environment variables
 load_dotenv()
 
+# Environment variables for security
+API_KEY = os.getenv("BACKEND_API_KEY", "default-dev-key")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+DEBUG_MODE = os.getenv("DEBUG_MODE", "true").lower() == "true"
+
 # Initialize FastAPI application
 app = FastAPI(
     title="Quantum Brain API",
@@ -28,7 +33,12 @@ app = FastAPI(
 # Configure CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # Frontend URLs
+    allow_origins=[
+        "http://localhost:3000", 
+        "http://localhost:3001",
+        "https://*.replit.dev",  # Replit URLs
+        "https://*.repl.co"       # Alternative Replit URLs
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -46,6 +56,17 @@ async def root():
     Returns the status of the Quantum Brain backend
     """
     return {"status": "Quantum Brain is online"}
+
+# API Authentication endpoint
+@app.post("/api/auth/verify")
+async def verify_api_key(api_key: str):
+    """
+    Verify API key for frontend authentication
+    """
+    if api_key == API_KEY:
+        return {"valid": True, "message": "API key verified"}
+    else:
+        raise HTTPException(status_code=401, detail="Invalid API key")
 
 # Health check endpoint
 @app.get("/health")

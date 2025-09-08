@@ -105,6 +105,11 @@ echo "🔧 Process IDs:"
 echo "   Backend:  $BACKEND_PID"
 echo "   Frontend: $FRONTEND_PID"
 echo ""
+echo "🔐 Security Notes:"
+echo "   - API Key: Set BACKEND_API_KEY in Replit Secrets"
+echo "   - Frontend will auto-detect Replit environment"
+echo "   - CORS configured for Replit URLs"
+echo ""
 print_status "Press Ctrl+C to stop all services"
 
 # Keep script running and handle cleanup
