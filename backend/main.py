@@ -11,7 +11,7 @@ import os
 from dotenv import load_dotenv
 
 # Import routers
-from routers import monitoring, remediation
+from routers import monitoring, remediation, quantum_api
 
 # Load environment variables
 load_dotenv()
@@ -47,6 +47,7 @@ app.add_middleware(
 # Include routers
 app.include_router(monitoring.router)
 app.include_router(remediation.router)
+app.include_router(quantum_api.router)
 
 # Health check endpoint
 @app.get("/")

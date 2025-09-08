@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useBackendStore } from '@/lib/stores/backendStore';
+import { useMonitoringMetrics, useRemediationStatus } from '@/lib/hooks/useQuantumData';
 import { 
   Brain, 
   CheckCircle, 
