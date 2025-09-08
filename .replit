@@ -1,0 +1,18 @@
+# Quantum Command Center - Replit Configuration
+language = "python3"
+run = "bash replit-startup.sh"
+
+[nix]
+channel = "stable-23_11"
+
+[interpreter]
+command = "python3"
+
+[env]
+PYTHONPATH = "${PYTHONPATH}:."
+NODE_ENV = "development"
+PORT = "3000"
+BACKEND_PORT = "8000"
+
+[deployment]
+run = ["sh", "-c", "bash replit-startup.sh"]
