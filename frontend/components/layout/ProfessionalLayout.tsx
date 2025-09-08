@@ -30,12 +30,12 @@ export default function ProfessionalLayout({ children }: LayoutProps) {
       <NavigationSidebar />
       
       {/* Main Content Area */}
-      <div className={`transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-16'}`}>
+      <div className={`transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-16'} min-h-screen`}>
         {/* Dashboard Header */}
         <DashboardHeader />
         
         {/* Main Content */}
-        <main className="p-6">
+        <main className="p-6 pt-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

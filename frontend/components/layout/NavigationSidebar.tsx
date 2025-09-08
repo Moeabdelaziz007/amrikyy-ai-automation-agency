@@ -84,7 +84,7 @@ export default function NavigationSidebar() {
 
   return (
     <motion.aside 
-      className={`bg-gradient-to-b from-carbon-black to-medium-gray border-r border-neon-green/20 transition-all duration-300 ${
+      className={`fixed left-0 top-0 h-full bg-gradient-to-b from-carbon-black to-medium-gray border-r border-neon-green/20 transition-all duration-300 z-30 ${
         isCollapsed ? 'w-16' : 'w-64'
       }`}
       initial={{ x: -300, opacity: 0 }}
@@ -101,8 +101,8 @@ export default function NavigationSidebar() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <h2 className="text-lg font-bold text-neon-green">Axon AI</h2>
-                <p className="text-xs text-gray-400">Enterprise Platform</p>
+                <h2 className="text-lg font-bold text-neon-green">Amrikyy AI</h2>
+                <p className="text-xs text-gray-400">Automation Agency</p>
               </motion.div>
             )}
             <button
