@@ -1,0 +1,227 @@
+/* AG-UI Enhanced Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --ag-primary: #3b82f6;
+  --ag-secondary: #8b5cf6;
+  --ag-success: #10b981;
+  --ag-warning: #f59e0b;
+  --ag-error: #ef4444;
+  --ag-bg-primary: #0f172a;
+  --ag-bg-secondary: #1e293b;
+  --ag-bg-tertiary: #334155;
+  --ag-text-primary: #f8fafc;
+  --ag-text-secondary: #cbd5e1;
+  --ag-text-muted: #64748b;
+  --ag-border: #475569;
+  --ag-border-hover: #64748b;
+}
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Smooth transitions for all interactive elements */
+.ag-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced card hover effects */
+.ag-card {
+  @apply bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ag-card:hover {
+  @apply border-gray-600;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Animated progress bars */
+.ag-progress {
+  @apply w-full bg-gray-700 rounded-full h-2 overflow-hidden;
+}
+
+.ag-progress-bar {
+  @apply h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ripple effect for buttons */
+.ag-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ag-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ag-ripple:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Floating animation for status indicators */
+.ag-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Pulse animation for active elements */
+.ag-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Gradient text effect */
+.ag-gradient-text {
+  background: linear-gradient(135deg, var(--ag-primary), var(--ag-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass morphism effect */
+.ag-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced scrollbar */
+.ag-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ag-scrollbar::-webkit-scrollbar-track {
+  background: var(--ag-bg-secondary);
+  border-radius: 3px;
+}
+
+.ag-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--ag-border);
+  border-radius: 3px;
+}
+
+.ag-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--ag-border-hover);
+}
+
+/* Loading skeleton */
+.ag-skeleton {
+  background: linear-gradient(90deg, 
+    var(--ag-bg-tertiary) 25%, 
+    var(--ag-bg-secondary) 50%, 
+    var(--ag-bg-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Status indicator colors */
+.ag-status-idle { @apply text-gray-400; }
+.ag-status-thinking { @apply text-yellow-400; }
+.ag-status-working { @apply text-blue-400; }
+.ag-status-completed { @apply text-green-400; }
+.ag-status-error { @apply text-red-400; }
+
+/* Enhanced button styles */
+.ag-btn-primary {
+  @apply px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium;
+  @apply hover:from-blue-600 hover:to-purple-700 transition-all duration-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900;
+}
+
+.ag-btn-secondary {
+  @apply px-6 py-3 bg-gray-700 text-gray-300 rounded-lg font-medium;
+  @apply hover:bg-gray-600 hover:text-white transition-all duration-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900;
+}
+
+/* Responsive grid */
+.ag-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Enhanced typography */
+.ag-heading-1 {
+  @apply text-4xl font-bold text-white mb-4;
+}
+
+.ag-heading-2 {
+  @apply text-2xl font-semibold text-white mb-3;
+}
+
+.ag-heading-3 {
+  @apply text-lg font-medium text-white mb-2;
+}
+
+.ag-text-muted {
+  @apply text-gray-400 text-sm;
+}
+
+/* Animation utilities */
+.ag-fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.ag-slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0; 
+    transform: translateX(-20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ag-bg-primary: #0a0a0a;
+    --ag-bg-secondary: #1a1a1a;
+    --ag-bg-tertiary: #2a2a2a;
+  }
+}

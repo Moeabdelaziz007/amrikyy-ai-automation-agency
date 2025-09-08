@@ -1,385 +1,276 @@
-/* app/globals.css - Enhanced Bitcoin Space Theme */
+/* ========================================
+   AMRIKYY AI - ORGANIZED THEME SYSTEM
+   ======================================== */
+
+/* 1. FONT IMPORTS */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap');
-/* Theme variables are defined in Tailwind config */
 
+/* 2. TAILWIND BASE */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Variables for Bitcoin Space Theme */
+/* 3. CSS VARIABLES - ORGANIZED BY CATEGORY */
 :root {
+  /* === COLORS === */
+  --ag-primary: #3b82f6;
+  --ag-secondary: #8b5cf6;
+  --ag-success: #10b981;
+  --ag-warning: #f59e0b;
+  --ag-error: #ef4444;
+  
+  /* === BACKGROUNDS === */
+  --ag-bg-primary: #0f172a;
+  --ag-bg-secondary: #1e293b;
+  --ag-bg-tertiary: #334155;
+  
+  /* === TEXT COLORS === */
+  --ag-text-primary: #f8fafc;
+  --ag-text-secondary: #cbd5e1;
+  --ag-text-muted: #64748b;
+  
+  /* === BORDERS === */
+  --ag-border: #475569;
+  --ag-border-hover: #64748b;
+  
+  /* === BITCOIN SPACE THEME === */
   --neon-green: #00ff41;
   --carbon-black: #0a0a0a;
   --medium-gray: #1a1a1a;
-  --deep-purple: #2d1b4e;
-  --cyber-blue: #0066ff;
-  --electric-purple: #8b5cf6;
-  --warning-orange: #f59e0b;
-  --danger-red: #ef4444;
-  --success-green: #10b981;
-  --info-blue: #3b82f6;
-  
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #00ff41 0%, #0066ff 100%);
-  --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #2d1b4e 100%);
-  --gradient-dark: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  
-  /* Shadows */
-  --shadow-neon: 0 0 20px rgba(0, 255, 65, 0.3);
-  --shadow-purple: 0 0 20px rgba(139, 92, 246, 0.3);
-  --shadow-blue: 0 0 20px rgba(0, 102, 255, 0.3);
-  
-  /* Borders */
-  --border-neon: 1px solid rgba(0, 255, 65, 0.3);
-  --border-purple: 1px solid rgba(139, 92, 246, 0.3);
-  --border-blue: 1px solid rgba(0, 102, 255, 0.3);
+  --dark-gray: #2a2a2a;
+  --light-gray: #cccccc;
+  --text-color: #ffffff;
+  --accent-color: #00ff41;
+  --border-color: #333333;
+  --shadow-color: rgba(0, 255, 65, 0.2);
 }
 
-/* Base Styles */
+/* 4. BASE STYLES */
 * {
-  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, var(--carbon-black) 0%, var(--medium-gray) 100%);
+  color: var(--text-color);
   margin: 0;
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
+/* 5. UTILITY CLASSES */
+.ag-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--gradient-dark);
-  color: #ffffff;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 6. COMPONENT STYLES */
+.ag-card {
+  @apply bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+.ag-card:hover {
+  @apply border-gray-600;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-::-webkit-scrollbar-track {
-  background: var(--carbon-black);
+.ag-progress {
+  @apply w-full bg-gray-700 rounded-full h-2 overflow-hidden;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--neon-green);
-  border-radius: 4px;
+.ag-progress-bar {
+  @apply h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--cyber-blue);
+/* 7. INTERACTIVE EFFECTS */
+.ag-ripple {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Selection Styles */
-::selection {
-  background: var(--neon-green);
-  color: var(--carbon-black);
+.ag-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
 }
 
-::-moz-selection {
-  background: var(--neon-green);
-  color: var(--carbon-black);
+.ag-ripple:active::before {
+  width: 300px;
+  height: 300px;
 }
 
-/* Focus Styles */
-:focus {
-  outline: 2px solid var(--neon-green);
-  outline-offset: 2px;
+/* 8. ANIMATIONS */
+.ag-float {
+  animation: float 3s ease-in-out infinite;
 }
 
-:focus:not(:focus-visible) {
-  outline: none;
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
-/* Utility Classes */
-.gradient-text {
-  background: var(--gradient-primary);
+.ag-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.ag-gradient-text {
+  background: linear-gradient(135deg, var(--ag-primary), var(--ag-secondary));
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;
-  font-weight: 700;
 }
 
-.gradient-text-purple {
-  background: var(--gradient-secondary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.gradient-text-blue {
-  background: linear-gradient(90deg, #0066ff, #00ff41);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.neon-border {
-  border: var(--border-neon);
-  box-shadow: var(--shadow-neon);
-}
-
-.neon-border-purple {
-  border: var(--border-purple);
-  box-shadow: var(--shadow-purple);
-}
-
-.neon-border-blue {
-  border: var(--border-blue);
-  box-shadow: var(--shadow-blue);
-}
-
-.glass-effect {
-  background: rgba(26, 26, 26, 0.8);
+/* 9. GLASS MORPHISM */
+.ag-glass {
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.card-hover {
-  transition: all 0.3s ease;
+/* 10. SCROLLBAR */
+.ag-scrollbar::-webkit-scrollbar {
+  width: 6px;
 }
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 255, 65, 0.2);
+.ag-scrollbar::-webkit-scrollbar-track {
+  background: var(--ag-bg-secondary);
+  border-radius: 3px;
 }
 
-/* Enhanced Animation Classes */
-.animate-float-particles {
-  animation: float-particles 6s ease-in-out infinite;
+.ag-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--ag-border);
+  border-radius: 3px;
 }
 
-.animate-neon-glow {
-  animation: neon-glow 2s ease-in-out infinite;
+.ag-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--ag-border-hover);
 }
 
-.animate-gradient-shift {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
+/* 11. LOADING STATES */
+.ag-skeleton {
+  background: linear-gradient(90deg,
+    var(--ag-bg-tertiary) 25%,
+    var(--ag-bg-secondary) 50%,
+    var(--ag-bg-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
 }
 
-.animate-scan-line {
-  animation: scan-line 4s ease-in-out infinite;
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
-.animate-pulse-neon {
-  animation: pulse-neon 2s infinite;
+/* 12. STATUS INDICATORS */
+.ag-status-idle { @apply text-gray-400; }
+.ag-status-thinking { @apply text-yellow-400; }
+.ag-status-working { @apply text-blue-400; }
+.ag-status-completed { @apply text-green-400; }
+.ag-status-error { @apply text-red-400; }
+
+/* 13. BUTTON STYLES */
+.ag-btn-primary {
+  @apply px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium;
+  @apply hover:from-blue-600 hover:to-purple-700 transition-all duration-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900;
 }
 
-.animate-glow {
-  animation: glow 2s infinite;
+.ag-btn-secondary {
+  @apply px-6 py-3 bg-gray-700 text-gray-300 rounded-lg font-medium;
+  @apply hover:bg-gray-600 hover:text-white transition-all duration-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900;
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+/* 14. RESPONSIVE GRID */
+.ag-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.animate-slide-in {
-  animation: slide-in 0.5s ease-out;
+/* 15. TYPOGRAPHY */
+.ag-heading-1 {
+  @apply text-4xl font-bold text-white mb-4;
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out;
+.ag-heading-2 {
+  @apply text-2xl font-semibold text-white mb-3;
 }
 
-.animate-scale-in {
-  animation: scale-in 0.3s ease-out;
+.ag-heading-3 {
+  @apply text-lg font-medium text-white mb-2;
 }
 
-/* Optimized Agent Card Animation Classes */
-.animate-agent-pulse {
-  animation: agent-pulse 2s ease-in-out infinite;
+.ag-text-muted {
+  @apply text-gray-400 text-sm;
 }
 
-.animate-agent-shimmer {
-  animation: agent-shimmer 2s linear infinite;
+/* 16. ANIMATION UTILITIES */
+.ag-fade-in {
+  animation: fadeIn 0.6s ease-in;
 }
 
-/* Keyframe Animations */
-@keyframes pulse-neon {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
-  }
-  50% {
-    opacity: 0.7;
-    box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
-  }
-}
-
-@keyframes float-particles {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-    opacity: 0.3;
-  }
-  25% {
-    transform: translateY(-20px) translateX(10px);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(-40px) translateX(-10px);
-    opacity: 0.8;
-  }
-  75% {
-    transform: translateY(-20px) translateX(5px);
-    opacity: 0.6;
-  }
-}
-
-@keyframes neon-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(0, 255, 65, 0.6);
-  }
-}
-
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-  }
-  25% {
-    transform: translateY(-10px) translateX(5px);
-  }
-  50% {
-    transform: translateY(-20px) translateX(0px);
-  }
-  75% {
-    transform: translateY(-10px) translateX(-5px);
-  }
-}
-
-/* Optimized Agent Card Animations - Consolidated */
-@keyframes agent-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
-  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 20px rgba(0, 255, 65, 0.8); }
-}
-
-@keyframes agent-shimmer {
-  0% { transform: translateX(-100%); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateX(100%); opacity: 0; }
-}
-
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes slide-in {
-  0% {
+@keyframes fadeIn {
+  from {
     opacity: 0;
     transform: translateY(20px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes fade-in {
-  0% {
+.ag-slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
     opacity: 0;
+    transform: translateX(-20px);
   }
-  100% {
+  to {
     opacity: 1;
+    transform: translateX(0);
   }
 }
 
-@keyframes scale-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  body {
-    font-size: 14px;
-  }
-  
-  .gradient-text {
-    font-size: 1.5rem;
-  }
-}
-
-/* Dark Mode Enhancements */
+/* 17. DARK MODE ENHANCEMENTS */
 @media (prefers-color-scheme: dark) {
   :root {
-    --neon-green: #00ff41;
-    --carbon-black: #000000;
-    --medium-gray: #111111;
+    --ag-bg-primary: #0a0a0a;
+    --ag-bg-secondary: #1a1a1a;
+    --ag-bg-tertiary: #2a2a2a;
   }
 }
 
-/* High Contrast Mode */
-@media (prefers-contrast: high) {
-  .neon-border {
-    border-width: 2px;
-  }
-  
-  .card-hover:hover {
-    transform: translateY(-2px);
-  }
+/* 18. LOADING SPINNER */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00ff88;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
 }
 
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  .card-hover {
-    transition: none;
-  }
-}
-
-/* Print Styles */
-@media print {
-  body {
-    background: white;
-    color: black;
-  }
-  
-  .neon-border {
-    border: 1px solid black;
-    box-shadow: none;
-  }
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

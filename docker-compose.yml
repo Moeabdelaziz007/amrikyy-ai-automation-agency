@@ -1,0 +1,66 @@
+# Docker Compose configuration for Quantum Command Center
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: quantum-brain-backend
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./backend:/code
+      - /code/.venv  # Exclude virtual environment from volume mount
+    environment:
+      - PYTHONPATH=/code
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    networks:
+      - quantum-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: quantum-brain-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # Exclude node_modules from volume mount
+      - /app/.next  # Exclude Next.js build cache from volume mount
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
+      - NEXT_PUBLIC_API_URL=http://localhost:8001
+    networks:
+      - quantum-network
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  quantum-network:
+    driver: bridge
+    name: quantum-network
+
+volumes:
+  backend_cache:
+    driver: local
+  frontend_cache:
+    driver: local

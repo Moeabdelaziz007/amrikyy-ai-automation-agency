@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '../components/theme-provider';
 import { PerformanceMonitor } from '../components/ui/PerformanceMonitor';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     siteName: 'Amrikyy AI Automation Agency',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://amrikyy-ai.vercel.app/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Amrikyy AI Automation Agency',
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Amrikyy AI Automation Agency',
     description: 'Revolutionizing AI with Advanced Automation Solutions',
-    images: ['/og-image.png'],
+    images: ['https://amrikyy-ai.vercel.app/og-image.png'],
   },
   robots: {
     index: true,
@@ -73,19 +74,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Critical CSS Inline */}
+        {/* Critical CSS - Loading spinner only */}
         <style dangerouslySetInnerHTML={{ 
           __html: `
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            html { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-            body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); color: #ffffff; }
             .loading { display: inline-block; width: 20px; height: 20px; border: 2px solid #00ff88; border-radius: 50%; border-top-color: transparent; animation: spin 1s linear infinite; }
             @keyframes spin { to { transform: rotate(360deg); } }
           ` 
         }} />
         
         {/* Preload Critical Resources */}
-        <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        {/* Removed non-existent font preload */}
         <link rel="preload" href="/images/hero-bg.webp" as="image" />
         
         {/* DNS Prefetch */}
@@ -120,7 +118,6 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#00ff41" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Amrikyy AI" />
@@ -128,7 +125,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#00ff41" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -138,6 +135,7 @@ export default function RootLayout({
           <div className="min-h-screen bg-gradient-to-br from-carbon-black to-medium-gray">
             {children}
             <PerformanceMonitor />
+            <Analytics />
           </div>
         </ThemeProvider>
       </body>

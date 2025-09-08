@@ -55,11 +55,6 @@
     { "source": "/dashboard", "destination": "/", "permanent": false },
     { "source": "/admin", "destination": "/dashboard", "permanent": false }
   ],
-  "functions": {
-    "frontend/app/api/**/*.ts": {
-      "maxDuration": 30
-    }
-  },
   "regions": ["iad1"],
   "crons": [
     { "path": "/api/cron/cleanup-tokens", "schedule": "0 2 * * *" },

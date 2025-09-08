@@ -80,6 +80,68 @@
 - **Prettier** - Code formatting
 - **Jest** - Testing framework
 
+## 🐳 Local Development Setup (Docker)
+
+### **Prerequisites**
+- Docker Desktop installed and running
+- Docker Compose v2.0+
+
+### **Quick Start with Docker**
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/amrikyy-ai-automation-agency.git
+   cd amrikyy-ai-automation-agency
+   ```
+
+2. **Start the entire application**
+   ```bash
+   docker-compose up
+   ```
+
+3. **Access the application**
+   - **Frontend**: http://localhost:3000
+   - **Backend API**: http://localhost:8001
+   - **API Documentation**: http://localhost:8001/docs
+
+### **Docker Commands**
+
+```bash
+# Start services in background
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+
+# Rebuild and start
+docker-compose up --build
+
+# View service status
+docker-compose ps
+```
+
+### **Development Features**
+- **Hot Reloading**: Both frontend and backend support live code changes
+- **Volume Mounting**: Local code changes are reflected immediately
+- **Health Checks**: Automatic service health monitoring
+- **Network Isolation**: Services communicate through dedicated Docker network
+- **Production Ready**: Optimized for both development and production use
+
+### **Service Architecture**
+```
+┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend       │
+│   (Next.js)     │◄──►│   (FastAPI)     │
+│   Port: 3000    │    │   Port: 8000    │
+└─────────────────┘    └─────────────────┘
+         │                       │
+         └───────────────────────┘
+              quantum-network
+```
+
 ## 🚀 Quick Start
 
 ### **Prerequisites**

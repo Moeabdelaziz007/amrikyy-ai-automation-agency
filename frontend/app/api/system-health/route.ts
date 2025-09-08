@@ -1,221 +1,235 @@
-// System Health API - Integration with Quantum Brain MVP Self-Healing System
 import { NextRequest, NextResponse } from 'next/server';
 
-interface SystemHealthResponse {
+// System Health Interface
+interface SystemHealth {
   status: 'healthy' | 'warning' | 'critical';
   uptime: number;
-  auto_fixes: number;
-  errors_detected: number;
-  performance_score: number;
-  components: {
-    cpu: { usage: number; status: 'healthy' | 'warning' | 'critical' };
-    memory: { usage: number; status: 'healthy' | 'warning' | 'critical' };
-    network: { latency: number; status: 'healthy' | 'warning' | 'critical' };
-    database: { connections: number; status: 'healthy' | 'warning' | 'critical' };
-    server: { response_time: number; status: 'healthy' | 'warning' | 'critical' };
-  };
-  recent_activities: Array<{
-    id: string;
-    type: 'fix' | 'warning' | 'error' | 'optimization';
-    message: string;
-    timestamp: string;
-    severity: 'low' | 'medium' | 'high';
-  }>;
+  cpu_usage: number;
+  memory_usage: number;
+  network_latency: number;
+  database_status: 'connected' | 'disconnected' | 'slow';
+  server_status: 'running' | 'stopped' | 'maintenance';
+  last_healing: string;
+  auto_fixes_count: number;
+  timestamp: string;
 }
 
-// Quantum Brain MVP Python API URL
-const QUANTUM_BRAIN_API_URL = process.env.QUANTUM_BRAIN_API_URL || 'http://localhost:8000';
+interface HealingAction {
+  id: string;
+  component: string;
+  issue: string;
+  action: string;
+  status: 'success' | 'failed' | 'pending';
+  duration: number;
+  timestamp: string;
+}
 
-export async function GET(_request: NextRequest): Promise<NextResponse<SystemHealthResponse>> {
+// Mock system health data
+let mockSystemHealth: SystemHealth = {
+  status: 'healthy',
+  uptime: 99.9,
+  cpu_usage: 45,
+  memory_usage: 62,
+  network_latency: 12,
+  database_status: 'connected',
+  server_status: 'running',
+  last_healing: new Date().toISOString(),
+  auto_fixes_count: 23,
+  timestamp: new Date().toISOString()
+};
+
+let healingHistory: HealingAction[] = [
+  {
+    id: '1',
+    component: 'Database',
+    issue: 'Connection timeout',
+    action: 'Restarted connection pool',
+    status: 'success',
+    duration: 2.3,
+    timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString()
+  },
+  {
+    id: '2',
+    component: 'API Server',
+    issue: 'High memory usage',
+    action: 'Cleared cache and restarted service',
+    status: 'success',
+    duration: 8.7,
+    timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString()
+  },
+  {
+    id: '3',
+    component: 'Network',
+    issue: 'Packet loss detected',
+    action: 'Switched to backup connection',
+    status: 'success',
+    duration: 1.2,
+    timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+  }
+];
+
+// GET - Retrieve system health status
+export async function GET(request: NextRequest) {
   try {
-    // Call Quantum Brain MVP Self-Healing System
-    const quantumResponse = await fetch(`${QUANTUM_BRAIN_API_URL}/api/self-healing/status`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${process.env.QUANTUM_BRAIN_API_KEY || 'dev-key'}`,
-        'Content-Type': 'application/json'
-      }
-    });
+    const { searchParams } = new URL(request.url);
+    const component = searchParams.get('component');
+    const history = searchParams.get('history');
 
-    if (!quantumResponse.ok) {
-      // Fallback to mock data if Quantum Brain API is not available
-      console.warn('Quantum Brain API not available, using mock data');
-      
-      const mockData: SystemHealthResponse = {
-        status: 'healthy',
-        uptime: 99.9,
-        auto_fixes: Math.floor(Math.random() * 20) + 5,
-        errors_detected: Math.floor(Math.random() * 5),
-        performance_score: 94 + Math.floor(Math.random() * 5),
-        components: {
-          cpu: { 
-            usage: 30 + Math.floor(Math.random() * 40), 
-            status: 'healthy' 
-          },
-          memory: { 
-            usage: 40 + Math.floor(Math.random() * 30), 
-            status: 'healthy' 
-          },
-          network: { 
-            latency: 10 + Math.floor(Math.random() * 20), 
-            status: 'healthy' 
-          },
-          database: { 
-            connections: 5 + Math.floor(Math.random() * 10), 
-            status: 'healthy' 
-          },
-          server: { 
-            response_time: 100 + Math.floor(Math.random() * 100), 
-            status: 'healthy' 
-          }
-        },
-        recent_activities: [
-          {
-            id: '1',
-            type: 'fix',
-            message: 'Automatically resolved memory leak in user session handling',
-            timestamp: '2 minutes ago',
-            severity: 'medium'
-          },
-          {
-            id: '2',
-            type: 'optimization',
-            message: 'Optimized database query performance by 23%',
-            timestamp: '5 minutes ago',
-            severity: 'low'
-          },
-          {
-            id: '3',
-            type: 'warning',
-            message: 'High CPU usage detected in background tasks',
-            timestamp: '8 minutes ago',
-            severity: 'high'
-          },
-          {
-            id: '4',
-            type: 'fix',
-            message: 'Fixed connection pool exhaustion issue',
-            timestamp: '12 minutes ago',
-            severity: 'high'
-          },
-          {
-            id: '5',
-            type: 'optimization',
-            message: 'Cached frequently accessed data, reduced response time by 15%',
-            timestamp: '15 minutes ago',
-            severity: 'low'
-          }
-        ]
-      };
-
-      return NextResponse.json(mockData);
-    }
-
-    const quantumData = await quantumResponse.json();
-
-    // Transform Quantum Brain response to our format
-    const response: SystemHealthResponse = {
-      status: quantumData.overall_status || 'healthy',
-      uptime: quantumData.uptime_percentage || 99.9,
-      auto_fixes: quantumData.auto_fixes_count || 0,
-      errors_detected: quantumData.errors_detected || 0,
-      performance_score: quantumData.performance_score || 95,
-      components: {
-        cpu: {
-          usage: quantumData.components?.cpu?.usage || 0,
-          status: quantumData.components?.cpu?.status || 'healthy'
-        },
-        memory: {
-          usage: quantumData.components?.memory?.usage || 0,
-          status: quantumData.components?.memory?.status || 'healthy'
-        },
-        network: {
-          latency: quantumData.components?.network?.latency || 0,
-          status: quantumData.components?.network?.status || 'healthy'
-        },
-        database: {
-          connections: quantumData.components?.database?.connections || 0,
-          status: quantumData.components?.database?.status || 'healthy'
-        },
-        server: {
-          response_time: quantumData.components?.server?.response_time || 0,
-          status: quantumData.components?.server?.status || 'healthy'
-        }
-      },
-      recent_activities: quantumData.recent_activities || []
+    // Simulate real-time data updates
+    mockSystemHealth = {
+      ...mockSystemHealth,
+      cpu_usage: Math.max(10, Math.min(90, mockSystemHealth.cpu_usage + (Math.random() - 0.5) * 10)),
+      memory_usage: Math.max(20, Math.min(85, mockSystemHealth.memory_usage + (Math.random() - 0.5) * 5)),
+      network_latency: Math.max(5, Math.min(50, mockSystemHealth.network_latency + (Math.random() - 0.5) * 5)),
+      timestamp: new Date().toISOString()
     };
 
-    return NextResponse.json(response);
+    // Determine overall system status based on metrics
+    if (mockSystemHealth.cpu_usage > 80 || mockSystemHealth.memory_usage > 85) {
+      mockSystemHealth.status = 'warning';
+    } else if (mockSystemHealth.cpu_usage > 95 || mockSystemHealth.memory_usage > 95) {
+      mockSystemHealth.status = 'critical';
+    } else {
+      mockSystemHealth.status = 'healthy';
+    }
+
+    if (history === 'true') {
+      return NextResponse.json({
+        success: true,
+        healing_history: healingHistory,
+        total: healingHistory.length
+      });
+    }
+
+    if (component) {
+      // Return specific component status
+      const componentData = {
+        cpu: { usage: mockSystemHealth.cpu_usage, status: mockSystemHealth.cpu_usage > 80 ? 'warning' : 'healthy' },
+        memory: { usage: mockSystemHealth.memory_usage, status: mockSystemHealth.memory_usage > 85 ? 'warning' : 'healthy' },
+        network: { latency: mockSystemHealth.network_latency, status: mockSystemHealth.network_latency > 30 ? 'warning' : 'healthy' },
+        database: { status: mockSystemHealth.database_status },
+        server: { status: mockSystemHealth.server_status }
+      };
+
+      return NextResponse.json({
+        success: true,
+        component: component,
+        data: componentData[component as keyof typeof componentData] || null
+      });
+    }
+
+    return NextResponse.json({
+      success: true,
+      system_health: mockSystemHealth,
+      message: 'System health retrieved successfully'
+    });
 
   } catch (error) {
     console.error('System Health API Error:', error);
-    
-    // Return error response with fallback data
-    const errorResponse: SystemHealthResponse = {
-      status: 'warning',
-      uptime: 95.0,
-      auto_fixes: 0,
-      errors_detected: 1,
-      performance_score: 85,
-      components: {
-        cpu: { usage: 0, status: 'critical' },
-        memory: { usage: 0, status: 'critical' },
-        network: { latency: 0, status: 'critical' },
-        database: { connections: 0, status: 'critical' },
-        server: { response_time: 0, status: 'critical' }
-      },
-      recent_activities: [{
-        id: 'error',
-        type: 'error',
-        message: 'Unable to connect to self-healing system',
-        timestamp: 'Just now',
-        severity: 'high'
-      }]
-    };
-
-    return NextResponse.json(errorResponse, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
-// POST endpoint to trigger manual healing
-export async function POST(request: NextRequest): Promise<NextResponse> {
+// POST - Trigger healing action
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { action, component } = body;
+    const { component, issue, action } = body;
 
-    // Call Quantum Brain MVP Self-Healing System
-    const quantumResponse = await fetch(`${QUANTUM_BRAIN_API_URL}/api/self-healing/trigger`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.QUANTUM_BRAIN_API_KEY || 'dev-key'}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        action: action || 'full_system_check',
-        component: component || 'all',
-        timestamp: new Date().toISOString()
-      })
-    });
+    // Simulate healing process
+    const healingAction: HealingAction = {
+      id: `healing_${Date.now()}`,
+      component: component || 'System',
+      issue: issue || 'Performance optimization',
+      action: action || 'Automated system tuning',
+      status: 'pending',
+      duration: 0,
+      timestamp: new Date().toISOString()
+    };
 
-    if (!quantumResponse.ok) {
-      throw new Error(`Self-healing trigger failed: ${quantumResponse.status}`);
+    // Add to history
+    healingHistory.unshift(healingAction);
+    
+    // Keep only last 50 entries
+    if (healingHistory.length > 50) {
+      healingHistory = healingHistory.slice(0, 50);
     }
 
-    const quantumData = await quantumResponse.json();
+    // Simulate healing process completion
+    setTimeout(() => {
+      const index = healingHistory.findIndex(h => h.id === healingAction.id);
+      if (index !== -1) {
+        healingHistory[index] = {
+          ...healingAction,
+          status: Math.random() > 0.1 ? 'success' : 'failed', // 90% success rate
+          duration: Math.random() * 10 + 1
+        };
+      }
+      
+      // Update system health
+      mockSystemHealth = {
+        ...mockSystemHealth,
+        auto_fixes_count: mockSystemHealth.auto_fixes_count + 1,
+        last_healing: new Date().toISOString(),
+        status: 'healthy' // Assume healing improves status
+      };
+    }, 2000);
 
     return NextResponse.json({
-      status: 'success',
-      message: 'Self-healing process triggered successfully',
-      task_id: quantumData.task_id,
-      estimated_duration: quantumData.estimated_duration || '2-5 minutes'
+      success: true,
+      healing_action: healingAction,
+      message: 'Healing action triggered successfully'
     });
 
   } catch (error) {
-    console.error('Self-Healing Trigger Error:', error);
-    
+    console.error('System Health API Error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+// PUT - Update system health metrics
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { cpu_usage, memory_usage, network_latency, database_status, server_status } = body;
+
+    // Update system health metrics
+    mockSystemHealth = {
+      ...mockSystemHealth,
+      cpu_usage: cpu_usage !== undefined ? cpu_usage : mockSystemHealth.cpu_usage,
+      memory_usage: memory_usage !== undefined ? memory_usage : mockSystemHealth.memory_usage,
+      network_latency: network_latency !== undefined ? network_latency : mockSystemHealth.network_latency,
+      database_status: database_status || mockSystemHealth.database_status,
+      server_status: server_status || mockSystemHealth.server_status,
+      timestamp: new Date().toISOString()
+    };
+
+    // Determine overall status
+    if (mockSystemHealth.cpu_usage > 80 || mockSystemHealth.memory_usage > 85) {
+      mockSystemHealth.status = 'warning';
+    } else if (mockSystemHealth.cpu_usage > 95 || mockSystemHealth.memory_usage > 95) {
+      mockSystemHealth.status = 'critical';
+    } else {
+      mockSystemHealth.status = 'healthy';
+    }
+
     return NextResponse.json({
-      status: 'error',
-      message: `Error triggering self-healing: ${error instanceof Error ? error.message : 'Unknown error'}`
-    }, { status: 500 });
+      success: true,
+      system_health: mockSystemHealth,
+      message: 'System health updated successfully'
+    });
+
+  } catch (error) {
+    console.error('System Health API Error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }

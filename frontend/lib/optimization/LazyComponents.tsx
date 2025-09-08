@@ -21,8 +21,9 @@ export const AnalyticsDashboard = lazy(() => import('../../components/dashboard/
 export const ActivityFeed = lazy(() => import('../../components/activity/ActivityFeed'));
 
 // Animation components - lazy loaded
-export const FloatingParticles = lazy(() => import('../../components/animations/FloatingParticles'));
-export const HeroAnimation = lazy(() => import('../../components/animations/HeroAnimation'));
+// Removed missing animation components - they were deleted
+// export const FloatingParticles = lazy(() => import('../../components/animations/FloatingParticles'));
+// export const HeroAnimation = lazy(() => import('../../components/animations/HeroAnimation'));
 export const ParticleField = lazy(() => import('../../components/background/ParticleField'));
 
 // UI components - lazy loaded

@@ -33,10 +33,6 @@ export { PerformanceMonitor } from './ui/PerformanceMonitor';
 export { default as Tooltip, CapabilityTooltip } from './ui/Tooltip';
 export { default as MicroInteraction, HoverGlow, ClickFeedback, FocusRing, LoadAnimation, StaggeredContainer } from './ui/MicroInteraction';
 
-// Animation Components
-export { default as HeroAnimation } from './animations/HeroAnimation';
-export { default as FloatingParticles } from './animations/FloatingParticles';
-
 // Security Components
 export { default as SecurityPanel } from './security/SecurityPanel';
 
@@ -44,5 +40,17 @@ export { default as SecurityPanel } from './security/SecurityPanel';
 export { default as ContextualAIHelp } from './help/ContextualAIHelp';
 export { default as GlobalHelpOverlay } from './help/GlobalHelpOverlay';
 
-// Animation Library
-export { animationPresets, getPresetsByCategory, getPresetsByTags, createCustomPreset, transitionPresets } from '../lib/animations/presets';
+// City Theme Components
+export { default as CityDashboard } from './city-theme/CityDashboard';
+export { default as AgentDistrict } from './city-theme/AgentDistrict';
+export { AgentPath, CityNavigation, AgentMovementController } from './city-theme/AgentMovement';
+
+// Enhanced Neon Components
+export { NeonHeader, NeonAgentStatus } from './city-theme/NeonComponents';
+export { NeonCityBlockOverview, CityBlockBuilding, CityBlockGrid } from './city-theme/NeonCityBlocks';
+export { NeonAnalyticsDashboard, NeonAnalyticsBar, NeonChart, NeonMetricsGrid } from './city-theme/NeonAnalytics';
+export { CyberpunkBackground, NeonGlow, EnhancedBackdropBlur, ParticleSystem } from './city-theme/CyberpunkEffects';
+export { default as EnhancedDistrictDetailsPanel } from './city-theme/EnhancedDistrictDetailsPanel';
+
+// Enhanced Monitoring Components
+export { default as EnhancedSelfHealingPanel } from './monitoring/EnhancedSelfHealingPanel';
