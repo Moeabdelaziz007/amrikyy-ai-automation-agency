@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import AgentCard from '../components/agents/AgentCard';
 import ProfessionalLayout from '../components/layout/ProfessionalLayout';
+import SelfHealingPanel from '../components/monitoring/SelfHealingPanel';
+import IDEAgentInterface from '../components/ide-agent/IDEAgentInterface';
 import { LazySection, LazyCard } from '../components/ui/LazyLoad';
 import { 
   Users, 
@@ -238,59 +240,14 @@ export default function ProfessionalDashboard() {
           </motion.div>
         </LazySection>
 
-        {/* System Health - Visual Progress Bars */}
+        {/* IDE Agent Interface */}
         <LazySection delay={400}>
-          <motion.div
-            className="bg-gradient-to-br from-carbon-black to-medium-gray border border-neon-green/20 rounded-xl p-6 mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center">
-              <Zap className="w-5 h-5 mr-2 text-neon-green" />
-              System Health
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Cpu className="w-4 h-4 text-cyber-blue" />
-                    <span className="text-sm text-gray-400">CPU Usage</span>
-                  </div>
-                  <span className="text-sm font-medium text-green-400">75%</span>
-                </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-green-400 to-green-500 h-2 rounded-full" style={{ width: '75%' }}></div>
-                </div>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <HardDrive className="w-4 h-4 text-electric-purple" />
-                    <span className="text-sm text-gray-400">Memory</span>
-                  </div>
-                  <span className="text-sm font-medium text-blue-400">50%</span>
-                </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-blue-400 to-blue-500 h-2 rounded-full" style={{ width: '50%' }}></div>
-                </div>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Wifi className="w-4 h-4 text-warning-orange" />
-                    <span className="text-sm text-gray-400">Network</span>
-                  </div>
-                  <span className="text-sm font-medium text-orange-400">65%</span>
-                </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-orange-400 to-orange-500 h-2 rounded-full" style={{ width: '65%' }}></div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <IDEAgentInterface />
+        </LazySection>
+
+        {/* Self-Healing System Panel */}
+        <LazySection delay={500}>
+          <SelfHealingPanel />
         </LazySection>
 
         {/* AI Agents Grid - Clean Cards */}
@@ -305,25 +262,25 @@ export default function ProfessionalDashboard() {
               AI Agents
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {agents.map((agent, index) => (
-                <LazyCard key={agent.id} delay={index * 100}>
-                  <AgentCard
-                    agent={agent}
-                    isActive={activeAgent === agent.id}
-                    onRunAgent={handleRunAgent}
-                    onViewDetails={handleViewDetails}
-                    animationDelay={0.2}
-                    index={index}
-                  />
-                </LazyCard>
-              ))}
+            {agents.map((agent, index) => (
+              <LazyCard key={agent.id} delay={index * 100}>
+                <AgentCard
+                  agent={agent}
+                  isActive={activeAgent === agent.id}
+                  onRunAgent={handleRunAgent}
+                  onViewDetails={handleViewDetails}
+                  animationDelay={0.2}
+                  index={index}
+                />
+              </LazyCard>
+            ))}
             </div>
           </motion.div>
         </LazySection>
 
         {/* Performance Chart - Proper Loading State */}
         <LazySection delay={800}>
-          <motion.div
+          <motion.div 
             className="bg-gradient-to-br from-carbon-black to-medium-gray border border-neon-green/20 rounded-xl p-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

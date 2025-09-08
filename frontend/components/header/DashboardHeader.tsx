@@ -12,7 +12,8 @@ import {
   Search,
   Menu,
   X,
-  Activity
+  Activity,
+  Bug
 } from 'lucide-react';
 import { QuickThemeToggle } from '../theme/ThemeToggle';
 import { ClickFeedback, HoverGlow } from '../ui/MicroInteraction';
@@ -42,7 +43,8 @@ export default function DashboardHeader() {
 
   const navItems: NavItem[] = [
     { id: 'home', label: 'Dashboard', icon: Home, href: '/', active: true },
-    { id: 'bug-fixer', label: 'Bug Fixer', icon: Code, href: '/bug-fixer' },
+    { id: 'ide-agent', label: 'IDE Agent', icon: Code, href: '/ide-agent' },
+    { id: 'bug-fixer', label: 'Bug Fixer', icon: Bug, href: '/bug-fixer' },
     { id: 'analytics', label: 'Analytics', icon: BarChart3, href: '/analytics' },
     { id: 'monitoring', label: 'Monitoring', icon: Activity, href: '/monitoring' },
     { id: 'settings', label: 'Settings', icon: Settings, href: '/settings' }

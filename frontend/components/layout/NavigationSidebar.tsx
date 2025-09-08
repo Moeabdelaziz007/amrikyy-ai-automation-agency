@@ -13,7 +13,8 @@ import {
   ChevronRight,
   Plus,
   Search,
-  Bug
+  Bug,
+  Code
 } from 'lucide-react';
 
 interface NavigationItem {
@@ -38,18 +39,19 @@ export default function NavigationSidebar() {
       active: true,
     },
     {
+      id: 'ide-agent',
+      label: 'IDE Agent',
+      icon: <Code className="w-5 h-5" />,
+      href: '/ide-agent',
+      badge: 1,
+    },
+    {
       id: 'bug-fixer',
       label: 'AI Bug Fixer',
       icon: <Bug className="w-5 h-5" />,
       href: '/bug-fixer',
       badge: 3,
     },
-    // {
-    //   id: 'analytics',
-    //   label: 'Analytics',
-    //   icon: <BarChart3 className="w-5 h-5" />,
-    //   href: '/analytics',
-    // },
     {
       id: 'monitoring',
       label: 'Monitoring',
