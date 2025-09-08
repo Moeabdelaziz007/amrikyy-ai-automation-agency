@@ -1,0 +1,102 @@
+Of course. Your existing rules are excellent, clear, and follow modern best practices.
+
+To make them even better for an AI assistant like me, I've enhanced them by adding more specificity and introducing new sections for crucial areas like Security, Performance, and AI Collaboration. This allows me to make better, more consistent decisions with less need for clarification.
+
+Here is the improved set of rules:
+
+Title: Axon + Quantum-Brain - Enhanced Project Conventions
+This document outlines the specific architectural rules, coding standards, and conventions for the Axon + Quantum-Brain monorepo. You must adhere to these rules strictly when writing, refactoring, or analyzing any code within this project.
+
+ARCHITECTURE
+Strict Separation of Concerns:
+
+Axon Hub (Next.js/TypeScript): Presentation and control layer. Responsible for UI, client-side state, and routing. [Amended Rule] It must not contain any business logic, data transformation, or direct database calls; these belong in the Quantum Brain.
+
+Quantum Brain (Python Service): Execution and intelligence layer. Handles all AI agent runs, complex computations, and core business logic.
+
+Universal Adapter: All communication between the Hub and the Brain must go through the established API Bridge / Adapter Layer.
+
+[New Rule] API Design: All new API endpoints must be RESTful. Use standard HTTP verbs (GET, POST, PUT, DELETE), kebab-case URL patterns (/api/agent-details), and appropriate HTTP status codes.
+
+Agent & Module Registration:
+
+Any new AI Agent must be registered in the central Agent Registry (/lib/agentRegistry.ts).
+
+Agents must adhere to the common IAgent interface, accepting a run command and returning a structured Artifact object.
+
+CODE STYLE & CONVENTIONS
+Languages:
+
+Frontend /axon-hub: TypeScript with strict mode enabled.
+
+Backend /quantum-brain-adapter: Python 3.10+ with full type hinting.
+
+Frontend (Next.js):
+
+UI Components: Build all UI elements using Tailwind CSS and Shadcn/ui principles. [Amended Rule] Before creating a new component, first try to compose it from existing primitives in /components/ui.
+
+State Management:
+
+Server State: Use React Query / SWR for all API data fetching, caching, and mutations.
+
+Global Client State: Use Zustand only for global state that is shared across disconnected parts of the app (e.g., user authentication, theme).
+
+Local State: Prefer local component state (useState, useReducer) for everything else.
+
+File Naming: Components: PascalCase.tsx. Hooks: useCamelCase.ts. API Routes: route.ts inside kebab-case folders.
+
+[New Rule] Directory Structure: Group components by feature under /components/features/[feature-name]/. General-purpose, reusable components belong in /components/shared/.
+
+Backend (Python):
+
+Code style must strictly adhere to PEP 8, enforced with a linter like flake8 or black.
+
+Use type hints for all function signatures and variables.
+
+[New Rule] Error Handling: Services should raise specific, custom exceptions (e.g., AgentExecutionError) instead of generic Exception. The adapter layer will catch these and return appropriate HTTP error responses.
+
+DATABASE & TESTING
+Data Access:
+
+All database interactions from Axon Hub must go through the Prisma ORM. The schema.prisma file is the single source of truth.
+
+[New Rule] Do not write raw SQL queries unless absolutely necessary for performance, and document the reason clearly.
+
+Testing:
+
+New utility functions and hooks must have corresponding unit tests (Vitest/Jest).
+
+Critical API endpoints must have integration tests.
+
+[New Rule] Test Coverage: Aim for a minimum of 80% test coverage for new backend logic.
+
+SECURITY
+[New Rule] Environment Variables: Never hard-code secrets (API keys, database URLs). All secrets must be loaded from environment variables and never be committed to Git.
+
+[New Rule] Input Sanitization: The Python backend must sanitize and validate all incoming data from the frontend to prevent injection attacks (XSS, SQLi).
+
+[New Rule] Authentication: API routes handling sensitive data or actions must be protected and verify user authentication status.
+
+PERFORMANCE
+[New Rule] Frontend Bundles: Use next/dynamic to lazy-load large components or libraries that are not required for the initial page load.
+
+[New Rule] Memoization: Use React.memo to wrap components that are expensive to render and receive the same props frequently.
+
+[New Rule] Database Queries: Ensure all Prisma queries that filter by common fields are backed by a database index to prevent slow lookups.
+
+DOCUMENTATION & GIT
+Comments:
+
+All new functions, classes, and complex logic must have TSDoc (for TS) or Docstring (for Python) comments.
+
+Commit Messages:
+
+All Git commits must follow the Conventional Commits specification (feat:, fix:, docs:, style:, refactor:, test:, chore:).
+
+AI ASSISTANT DIRECTIVES
+[New Rule] Plan First: When asked to implement a new feature, first provide a brief plan of the files you will create or modify and ask for my confirmation before writing code.
+
+[New Rule] Explain Changes: When refactoring code, briefly explain why the changes are an improvement (e.g., "Refactoring to use the AgentBase component to reduce code duplication and improve maintainability.").
+
+[New Rule] Strict Adherence: When generating code, adhere strictly to all the rules in this document without exception.
+

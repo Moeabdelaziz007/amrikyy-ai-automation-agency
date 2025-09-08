@@ -1,0 +1,408 @@
+// Enhanced Dashboard UI with Cryptocurrency Theme
+// styles/theme-enhanced.scss
+
+:root {
+  --neon-green: #00ff41;
+  --carbon-black: #0a0a0a;
+  --medium-gray: #1a1a1a;
+  --deep-purple: #2d1b4e;
+  --cyber-blue: #0066ff;
+  --electric-purple: #8b5cf6;
+  --warning-orange: #f59e0b;
+  --danger-red: #ef4444;
+  --success-green: #10b981;
+  --info-blue: #3b82f6;
+  
+  // Gradients
+  --gradient-primary: linear-gradient(135deg, #00ff41 0%, #0066ff 100%);
+  --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #2d1b4e 100%);
+  --gradient-dark: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  
+  // Shadows
+  --shadow-neon: 0 0 20px rgba(0, 255, 65, 0.3);
+  --shadow-purple: 0 0 20px rgba(139, 92, 246, 0.3);
+  --shadow-blue: 0 0 20px rgba(0, 102, 255, 0.3);
+  
+  // Borders
+  --border-neon: 1px solid rgba(0, 255, 65, 0.3);
+  --border-purple: 1px solid rgba(139, 92, 246, 0.3);
+  --border-blue: 1px solid rgba(0, 102, 255, 0.3);
+}
+
+// Global Styles
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--gradient-dark);
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+// Enhanced Card Components
+.card {
+  background: rgba(26, 26, 26, 0.8);
+  border: var(--border-neon);
+  box-shadow: var(--shadow-neon);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+    border-color: rgba(0, 255, 65, 0.5);
+  }
+  
+  &.card-purple {
+    border: var(--border-purple);
+    box-shadow: var(--shadow-purple);
+    
+    &:hover {
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+      border-color: rgba(139, 92, 246, 0.5);
+    }
+  }
+  
+  &.card-blue {
+    border: var(--border-blue);
+    box-shadow: var(--shadow-blue);
+    
+    &:hover {
+      box-shadow: 0 0 30px rgba(0, 102, 255, 0.4);
+      border-color: rgba(0, 102, 255, 0.5);
+    }
+  }
+}
+
+// Gradient Text Effects
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+  
+  &.gradient-purple {
+    background: var(--gradient-secondary);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  &.gradient-blue {
+    background: linear-gradient(90deg, #0066ff, #00ff41);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+// Neon Border Effects
+.neon-border {
+  box-shadow: var(--shadow-neon);
+  border: var(--border-neon);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--gradient-primary);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.3;
+  }
+  
+  &.neon-purple {
+    box-shadow: var(--shadow-purple);
+    border: var(--border-purple);
+    
+    &::before {
+      background: var(--gradient-secondary);
+    }
+  }
+  
+  &.neon-blue {
+    box-shadow: var(--shadow-blue);
+    border: var(--border-blue);
+    
+    &::before {
+      background: linear-gradient(90deg, #0066ff, #00ff41);
+    }
+  }
+}
+
+// Active Status Indicators
+.active-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+  animation: pulse 2s infinite;
+  
+  &.indicator-warning {
+    background-color: var(--warning-orange);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
+  }
+  
+  &.indicator-danger {
+    background-color: var(--danger-red);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+  }
+  
+  &.indicator-info {
+    background-color: var(--info-blue);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Enhanced Button Styles
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 255, 65, 0.3);
+    }
+  }
+  
+  &.btn-secondary {
+    background: var(--gradient-secondary);
+    color: white;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    }
+  }
+  
+  &.btn-outline {
+    background: transparent;
+    border: var(--border-neon);
+    color: var(--neon-green);
+    
+    &:hover {
+      background: rgba(0, 255, 65, 0.1);
+      box-shadow: var(--shadow-neon);
+    }
+  }
+}
+
+// Enhanced Input Styles
+.input {
+  background: rgba(26, 26, 26, 0.8);
+  border: var(--border-neon);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: white;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    outline: none;
+    box-shadow: var(--shadow-neon);
+    border-color: rgba(0, 255, 65, 0.6);
+  }
+  
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+// Dashboard Layout Enhancements
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 24px;
+}
+
+.dashboard-header {
+  background: rgba(26, 26, 26, 0.9);
+  border-bottom: var(--border-neon);
+  padding: 20px 24px;
+  backdrop-filter: blur(10px);
+  
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  .subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 4px;
+  }
+}
+
+// Agent Card Enhancements
+.agent-card {
+  background: rgba(26, 26, 26, 0.8);
+  border: var(--border-neon);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+  }
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 255, 65, 0.2);
+    border-color: rgba(0, 255, 65, 0.5);
+  }
+  
+  .agent-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--neon-green);
+  }
+  
+  .agent-description {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  
+  .agent-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    background: rgba(0, 255, 65, 0.1);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    
+    &.status-active {
+      color: var(--neon-green);
+    }
+    
+    &.status-inactive {
+      color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .dashboard-header {
+    padding: 16px;
+    
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .agent-card {
+    padding: 20px;
+  }
+}
+
+// Dark Mode Enhancements
+@media (prefers-color-scheme: dark) {
+  :root {
+    --neon-green: #00ff41;
+    --carbon-black: #000000;
+    --medium-gray: #111111;
+  }
+}
+
+// High Contrast Mode
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+  
+  .neon-border {
+    border-width: 2px;
+  }
+  
+  .active-indicator {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// Reduced Motion
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
