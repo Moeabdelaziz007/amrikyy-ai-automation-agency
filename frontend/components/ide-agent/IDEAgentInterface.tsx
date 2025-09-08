@@ -10,7 +10,6 @@ import {
   CheckCircle, 
   AlertTriangle,
   FileText,
-  Zap,
   Settings,
   Download
 } from 'lucide-react';

@@ -13,11 +13,7 @@ import {
   Activity, 
   Target, 
   BarChart3, 
-  Zap,
-  TrendingUp,
-  Cpu,
-  HardDrive,
-  Wifi
+  TrendingUp
 } from 'lucide-react';
 
 interface Agent {

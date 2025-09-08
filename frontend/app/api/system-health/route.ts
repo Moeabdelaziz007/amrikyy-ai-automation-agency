@@ -26,7 +26,7 @@ interface SystemHealthResponse {
 // Quantum Brain MVP Python API URL
 const QUANTUM_BRAIN_API_URL = process.env.QUANTUM_BRAIN_API_URL || 'http://localhost:8000';
 
-export async function GET(request: NextRequest): Promise<NextResponse<SystemHealthResponse>> {
+export async function GET(_request: NextRequest): Promise<NextResponse<SystemHealthResponse>> {
   try {
     // Call Quantum Brain MVP Self-Healing System
     const quantumResponse = await fetch(`${QUANTUM_BRAIN_API_URL}/api/self-healing/status`, {
